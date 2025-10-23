@@ -1,0 +1,25 @@
+
+[versions]
+kotlin = "1.9.0"
+composeCompiler = "1.5.3"
+espressoCore = "3.5.1"
+coreKtx = "1.9.0"
+appcompat = "1.6.1"
+material = "1.10.0"
+junit = "4.13.2"
+androidxJunit = "1.1.5"
+ksp = "1.9.22-1.0.17"
+
+[libraries]
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "composeCompiler" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
