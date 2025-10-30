@@ -100,12 +100,18 @@ dependencies {
     // Permissions
     implementation("com.google.accompanist:accompanist-permissions:0.37.3")
 
-        // Internet for OSM tiles
+    // Internet for OSM tiles
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     // Maps Compose
     implementation("com.google.maps.android:maps-compose:4.1.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    // WorkManager para notificaciones programadas
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // Coil para cargar imágenes
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

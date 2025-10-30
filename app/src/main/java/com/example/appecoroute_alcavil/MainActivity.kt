@@ -9,10 +9,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appecoroute_alcavil.data.repository.AuthRepository
 import com.example.appecoroute_alcavil.data.repository.EcoRouteDatabase
 import com.example.appecoroute_alcavil.data.repository.EcoRouteRepository
 import com.example.appecoroute_alcavil.ui.EcoRouteNavigation
 import com.example.appecoroute_alcavil.ui.theme.AppEcoRouteTheme
+import com.example.appecoroute_alcavil.ui.viewmodel.AuthViewModel
 import com.example.appecoroute_alcavil.ui.viewmodels.RutasViewModel
 import com.example.appecoroute_alcavil.utils.MapUtils
 import com.example.appecoroute_alcavil.data.location.LocationManager
@@ -33,6 +35,11 @@ class MainActivity : ComponentActivity() {
             puntoGPSDao = database.puntoGPSDao()
         )
         
+        val authRepository = AuthRepository(
+            usuarioDao = database.usuarioDao(),
+            sesionDao = database.sesionDao()
+        )
+        
         val locationManager = LocationManager(this)
         
         // Inicializar datos de ejemplo
@@ -45,15 +52,20 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val rutasViewModel: RutasViewModel = viewModel(
-                    factory = RutasViewModel.Factory(repository)
-                )
-                val locationViewModel: LocationViewModel = viewModel(
-                    factory = LocationViewModel.Factory(locationManager)
-                )
-                EcoRouteNavigation(
-                    viewModel = rutasViewModel,
-                    locationViewModel = locationViewModel
-                )
+                        factory = RutasViewModel.Factory(repository)
+                    )
+                    val locationViewModel: LocationViewModel = viewModel(
+                        factory = LocationViewModel.Factory(locationManager)
+                    )
+                    val authViewModel: AuthViewModel = viewModel(
+                        factory = AuthViewModel.Factory(authRepository)
+                    )
+                    
+                    EcoRouteNavigation(
+                        viewModel = rutasViewModel,
+                        locationViewModel = locationViewModel,
+                        authViewModel = authViewModel
+                    )
                 }
             }
         }

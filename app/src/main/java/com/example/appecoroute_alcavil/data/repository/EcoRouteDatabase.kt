@@ -8,11 +8,12 @@ import androidx.room.TypeConverters
 import com.example.appecoroute_alcavil.data.model.Comentario
 import com.example.appecoroute_alcavil.data.model.PuntoGPSEntity
 import com.example.appecoroute_alcavil.data.model.Ruta
+import com.example.appecoroute_alcavil.data.model.Sesion
 import com.example.appecoroute_alcavil.data.model.Usuario
 
 @Database(
-    entities = [Ruta::class, Comentario::class, Usuario::class, PuntoGPSEntity::class],
-    version = 2,
+    entities = [Ruta::class, Comentario::class, Usuario::class, PuntoGPSEntity::class, Sesion::class],
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -21,6 +22,7 @@ abstract class EcoRouteDatabase : RoomDatabase() {
     abstract fun comentarioDao(): ComentarioDao
     abstract fun usuarioDao(): UsuarioDao
     abstract fun puntoGPSDao(): PuntoGPSDao
+    abstract fun sesionDao(): SesionDao
 
     companion object {
         @Volatile

@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DirectionsRun
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,17 +19,33 @@ import com.example.appecoroute_alcavil.ui.components.LoadingSpinner
 import com.example.appecoroute_alcavil.ui.components.RatingBar
 import com.example.appecoroute_alcavil.ui.viewmodels.RutasViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RutasListScreen(
     viewModel: RutasViewModel,
     onNavigateToDetail: (Long) -> Unit,
     onNavigateToAdd: () -> Unit,
     onNavigateToRegistro: () -> Unit,
+    onNavigateToProfile: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.rutasUiState.collectAsState()
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Mis Rutas") },
+                actions = {
+                    IconButton(onClick = onNavigateToProfile) {
+                        Icon(Icons.Default.Person, contentDescription = "Perfil")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            )
+        },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = onNavigateToRegistro,

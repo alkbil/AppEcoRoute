@@ -41,6 +41,23 @@ class EcoRouteRepository(
     suspend fun insertUsuario(usuario: Usuario) = usuarioDao.insertUsuario(usuario)
     
     suspend fun updateUsuario(usuario: Usuario) = usuarioDao.updateUsuario(usuario)
+    
+    /**
+     * Actualiza las estadísticas del usuario cuando completa una ruta
+     */
+    suspend fun actualizarEstadisticasUsuario(
+        usuarioId: String,
+        kmAdicionales: Double,
+        caloriasAdicionales: Double,
+        co2Adicional: Double
+    ) {
+        usuarioDao.actualizarEstadisticas(
+            usuarioId = usuarioId,
+            distancia = kmAdicionales,
+            calorias = caloriasAdicionales,
+            co2 = co2Adicional
+        )
+    }
 
     // Puntos GPS
     fun getPuntosPorRuta(rutaId: Long): Flow<List<PuntoGPSEntity>> = 

@@ -1,6 +1,8 @@
 package com.example.appecoroute_alcavil.ui
 
 sealed class Screen(val route: String) {
+    object Login : Screen("login")
+    object Register : Screen("register")
     object RutasList : Screen("rutas_list")
     object RutaDetail : Screen("ruta_detail/{rutaId}") {
         fun createRoute(rutaId: Long) = "ruta_detail/$rutaId"

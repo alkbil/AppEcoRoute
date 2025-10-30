@@ -14,6 +14,7 @@ import com.example.appecoroute_alcavil.ui.components.EcoRouteMap
 import com.example.appecoroute_alcavil.ui.components.EcoRouteMapOSM
 import com.example.appecoroute_alcavil.ui.components.GpsStatusHandler
 import com.example.appecoroute_alcavil.ui.components.LocationPermissionsHandler
+import com.example.appecoroute_alcavil.ui.viewmodel.AuthViewModel
 import com.example.appecoroute_alcavil.ui.viewmodels.LocationViewModel
 import com.example.appecoroute_alcavil.ui.viewmodels.RutasViewModel
 import com.example.appecoroute_alcavil.utils.isGpsEnabled
@@ -25,11 +26,13 @@ import org.osmdroid.util.GeoPoint
 fun RegistroRutaScreen(
     locationViewModel: LocationViewModel,
     viewModel: RutasViewModel,
+    authViewModel: AuthViewModel,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val locationState by locationViewModel.locationState.collectAsState()
+    val usuarioActual by authViewModel.usuarioActual.collectAsState()
     var showGuardarDialog by remember { mutableStateOf(false) }
     var showTipoRutaDialog by remember { mutableStateOf(false) }
     var selectedTipoRuta by remember { mutableStateOf(TipoRuta.CAMINATA) }
@@ -258,7 +261,8 @@ fun RegistroRutaScreen(
                                     tipo = selectedTipoRuta,
                                     distancia = stats.distanciaRecorrida,
                                     descripcion = descripcionFinal,
-                                    puntosGPS = locationState.trackingPoints
+                                    puntosGPS = locationState.trackingPoints,
+                                    usuarioId = usuarioActual?.id
                                 )
                                 
                                 // Limpiar campos para la próxima vez
