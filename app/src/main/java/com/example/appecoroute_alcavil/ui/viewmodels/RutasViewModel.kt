@@ -58,8 +58,13 @@ class RutasViewModel(private val repository: EcoRouteRepository) : ViewModel() {
         tipo: TipoRuta,
         distancia: Double,
         descripcion: String = "",
+        duracionMinutos: Int = 0,
         puntosGPS: List<org.osmdroid.util.GeoPoint> = emptyList(),
-        usuarioId: String? = null
+        usuarioId: String? = null,
+        climaTemperatura: Double? = null,
+        climaDescripcion: String? = null,
+        climaHumedad: Int? = null,
+        climaViento: Double? = null
     ) {
         viewModelScope.launch {
             _nuevaRutaUiState.value = NuevaRutaUiState(isLoading = true)
@@ -69,7 +74,12 @@ class RutasViewModel(private val repository: EcoRouteRepository) : ViewModel() {
                     tipo = tipo,
                     distancia = distancia,
                     descripcion = descripcion,
-                    creadorId = usuarioId ?: "default_user"
+                    duracionMinutos = duracionMinutos,
+                    creadorId = usuarioId ?: "default_user",
+                    climaTemperatura = climaTemperatura,
+                    climaDescripcion = climaDescripcion,
+                    climaHumedad = climaHumedad,
+                    climaViento = climaViento
                 )
                 val rutaId = repository.insertRuta(ruta)
                 

@@ -14,6 +14,7 @@ import com.example.appecoroute_alcavil.ui.components.EcoRouteMap
 import com.example.appecoroute_alcavil.ui.components.EcoRouteMapOSM
 import com.example.appecoroute_alcavil.ui.components.GpsStatusHandler
 import com.example.appecoroute_alcavil.ui.components.LocationPermissionsHandler
+import com.example.appecoroute_alcavil.ui.components.WeatherCard
 import com.example.appecoroute_alcavil.ui.viewmodel.AuthViewModel
 import com.example.appecoroute_alcavil.ui.viewmodels.LocationViewModel
 import com.example.appecoroute_alcavil.ui.viewmodels.RutasViewModel
@@ -38,6 +39,7 @@ fun RegistroRutaScreen(
     var selectedTipoRuta by remember { mutableStateOf(TipoRuta.CAMINATA) }
     var nombreRuta by remember { mutableStateOf("") }
     var descripcionRuta by remember { mutableStateOf("") }
+    var weatherInfo by remember { mutableStateOf<com.example.appecoroute_alcavil.data.api.WeatherInfo?>(null) }
 
     Scaffold(
         topBar = {
@@ -79,6 +81,20 @@ fun RegistroRutaScreen(
                             ?: GeoPoint(0.0, 0.0),
                         puntos = locationState.trackingPoints
                     )
+
+                    // Tarjeta del clima (si hay ubicación)
+                    locationState.currentLocation?.let { location ->
+                        WeatherCard(
+                            latitude = location.latitude,
+                            longitude = location.longitude,
+                            modifier = Modifier
+                                .align(Alignment.TopCenter)
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            onWeatherLoaded = { weather ->
+                                weatherInfo = weather
+                            }
+                        )
+                    }
 
                     // Panel de control
                     Card(
@@ -228,6 +244,10 @@ fun RegistroRutaScreen(
                             style = MaterialTheme.typography.bodySmall
                         )
                         Text(
+                            "Tiempo: ${(stats.tiempoTranscurrido / 60).toInt()} min",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Text(
                             "Calorías: ${String.format("%.1f", stats.caloriasQuemadas)} cal",
                             style = MaterialTheme.typography.bodySmall
                         )
@@ -261,8 +281,13 @@ fun RegistroRutaScreen(
                                     tipo = selectedTipoRuta,
                                     distancia = stats.distanciaRecorrida,
                                     descripcion = descripcionFinal,
+                                    duracionMinutos = (stats.tiempoTranscurrido / 60).toInt(),
                                     puntosGPS = locationState.trackingPoints,
-                                    usuarioId = usuarioActual?.id
+                                    usuarioId = usuarioActual?.id,
+                                    climaTemperatura = weatherInfo?.temperature,
+                                    climaDescripcion = weatherInfo?.description,
+                                    climaHumedad = weatherInfo?.humidity,
+                                    climaViento = weatherInfo?.windSpeed
                                 )
                                 
                                 // Limpiar campos para la próxima vez
