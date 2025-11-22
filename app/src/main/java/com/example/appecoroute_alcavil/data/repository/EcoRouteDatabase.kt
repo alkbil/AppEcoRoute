@@ -13,7 +13,7 @@ import com.example.appecoroute_alcavil.data.model.Usuario
 
 @Database(
     entities = [Ruta::class, Comentario::class, Usuario::class, PuntoGPSEntity::class, Sesion::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

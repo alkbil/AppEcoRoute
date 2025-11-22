@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.appecoroute_alcavil.data.model.TipoRuta
 import com.example.appecoroute_alcavil.ui.components.EcoRouteMapOSM
@@ -205,6 +206,93 @@ fun RutaDetailScreen(
                                             text = "${ruta.duracionMinutos} min",
                                             style = MaterialTheme.typography.headlineSmall
                                         )
+                                    }
+                                }
+                            }
+                            
+                            // Mostrar información del clima si existe
+                            if (ruta.climaTemperatura != null) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Card(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                                    )
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(16.dp)
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Cloud,
+                                                contentDescription = "Clima",
+                                                tint = MaterialTheme.colorScheme.primary
+                                            )
+                                            Text(
+                                                text = "Condiciones Climáticas",
+                                                style = MaterialTheme.typography.titleMedium,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                        
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Column {
+                                                Text(
+                                                    text = "Temperatura",
+                                                    style = MaterialTheme.typography.bodySmall
+                                                )
+                                                Text(
+                                                    text = String.format("%.1f°C", ruta.climaTemperatura),
+                                                    style = MaterialTheme.typography.bodyLarge,
+                                                    fontWeight = FontWeight.SemiBold
+                                                )
+                                            }
+                                            
+                                            if (ruta.climaHumedad != null) {
+                                                Column {
+                                                    Text(
+                                                        text = "Humedad",
+                                                        style = MaterialTheme.typography.bodySmall
+                                                    )
+                                                    Text(
+                                                        text = "${ruta.climaHumedad}%",
+                                                        style = MaterialTheme.typography.bodyLarge,
+                                                        fontWeight = FontWeight.SemiBold
+                                                    )
+                                                }
+                                            }
+                                            
+                                            if (ruta.climaViento != null) {
+                                                Column {
+                                                    Text(
+                                                        text = "Viento",
+                                                        style = MaterialTheme.typography.bodySmall
+                                                    )
+                                                    Text(
+                                                        text = String.format("%.1f m/s", ruta.climaViento),
+                                                        style = MaterialTheme.typography.bodyLarge,
+                                                        fontWeight = FontWeight.SemiBold
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        
+                                        if (!ruta.climaDescripcion.isNullOrBlank()) {
+                                            Spacer(modifier = Modifier.height(8.dp))
+                                            Text(
+                                                text = ruta.climaDescripcion,
+                                                style = MaterialTheme.typography.bodyMedium,
+                                                color = MaterialTheme.colorScheme.onTertiaryContainer
+                                            )
+                                        }
                                     }
                                 }
                             }

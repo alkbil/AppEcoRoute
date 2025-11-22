@@ -16,6 +16,11 @@ data class Ruta(
     val fechaCreacion: Long = System.currentTimeMillis(),
     val creadorId: String = "", // ID del usuario que creó la ruta
     val fotos: String = "", // URIs de fotos separadas por comas
+    // Datos del clima al momento de crear la ruta
+    val climaTemperatura: Double? = null, // Temperatura en °C
+    val climaDescripcion: String? = null, // Descripción del clima
+    val climaHumedad: Int? = null, // Humedad en %
+    val climaViento: Double? = null, // Velocidad del viento en m/s
     val caloriasPorKm: Double = when(tipo) {
         TipoRuta.CAMINATA -> 60.0
         TipoRuta.BICICLETA -> 40.0
